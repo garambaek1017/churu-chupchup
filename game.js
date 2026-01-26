@@ -109,7 +109,8 @@ function startHold(e) {
   if (isHolding) return;
 
   isHolding = true;
-  cat.src = 'cat_eating.png';
+  //cat.src = 'cat_eating.png';
+  cat.src = 'cat_eating3.gif';
   churu.classList.add('eating');
 
   infinite.classList.add('active');
@@ -138,6 +139,7 @@ function stopHold() {
 
 function eatOnce() {
   cat.src = 'cat_eating.png';
+  //cat.src = 'cat_eating3.gif';
   churu.classList.add('eating');
 
   setTimeout(() => {
@@ -167,6 +169,7 @@ function success() {
   text.textContent = '맛있다냥!';
 
   cat.src = 'cat_eating.png';
+  //cat.src = 'cat_eating3.gif';
   churu.classList.remove('eating');
 
   setTimeout(() => {
