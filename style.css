@@ -1,0 +1,102 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f6f6f6;
+  font-family: sans-serif;
+}
+
+/* 전체 게임 영역 */
+#game {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  height: 90vh;
+
+  margin: 16px auto;
+  padding: 16px 16px 20px;
+
+  background: #ffffff;
+  border-radius: 24px;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.04);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 지시 말풍선 */
+#command {
+  margin-top: 8px;
+  font-size: 28px;
+  font-weight: bold;
+  background: white;
+  padding: 6px 14px;
+  border-radius: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* 고양이 영역 */
+#cat-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#cat {
+  width: 80%;
+  max-width: 260px;
+}
+
+/* 츄르 영역 (엄지 전용) */
+#churu-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+#churu {
+  width: 96px;
+  cursor: pointer;
+}
+
+/* 만족도 바 */
+#bar {
+  width: 100%;
+  height: 12px;
+  background: #ddd;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+#fill {
+  width: 0%;
+  height: 100%;
+  background: #ff8c8c;
+  transition: width 0.2s;
+}
+
+/* 설명 텍스트 */
+#text {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #444;
+}
+
+/* 먹는 중 애니메이션 */
+.eating {
+  animation: nibble 0.4s ease-in-out infinite;
+}
+
+@keyframes nibble {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
