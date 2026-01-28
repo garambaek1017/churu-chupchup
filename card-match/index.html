@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>고양이 카드 맞추기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game">
+      <div id="start-screen" class="screen">
+    <div class="title-image-area">
+        <span>TITLE IMAGE AREA</span>
+    </div>
+    <h1 class="game-title">카드 짝 맞추기</h1>
+    <div class="difficulty-group">
+        <button class="menu-btn difficulty-btn" onclick="loadingGame(8)">하 (8쌍)</button>
+        <button class="menu-btn difficulty-btn" onclick="loadingGame(10)">중 (10쌍)</button>
+        <button class="menu-btn difficulty-btn" onclick="loadingGame(15)">상 (15쌍)</button>
+    </div>
+</div>
+
+        <div id="game-screen" class="screen hidden">
+            <div id="game-board" class="grid-container"></div>
+            <div id="timer-wrapper">
+                <span id="timer-label">Play Time : </span>
+                <span id="timer-count">0</span>초
+            </div>
+            <div id="start-overlay" class="hidden">START!</div>
+        </div>
+
+        <div id="end-screen" class="screen hidden">
+            <div class="end-content">
+                <h2>🎉 미션 성공!</h2>
+                <p id="final-message">수고하셨습니다.<br>playtime : 0초</p>
+                <div class="button-group">
+                    <button class="menu-btn secondary" onclick="loadingGame()">다시 하기</button>
+                    <button class="menu-btn outline" onclick="goToHome()">시작으로</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
