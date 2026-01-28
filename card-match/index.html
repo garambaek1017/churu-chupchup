@@ -8,54 +8,95 @@
 </head>
 <body>
     <div id="game">
-       <div id="start-screen" class="screen start-bg"> 
-    
+
+        <div id="start-screen" class="screen start-bg"> 
             <button class="menu-btn start-btn" onclick="startGameRandom()">
                 GAME START
             </button>
         </div>
 
         <div id="game-screen" class="screen hidden">
-            <div id="timer-wrapper">
-                <span id="timer-label">Play Time : </span>
-                <span id="timer-count">0</span>초
-            </div>
+            <div class="game-header">
+                <div id="timer-wrapper">
+                    <span id="timer-label">Play Time : </span>
+                    <span id="timer-count">0</span>초
+                </div>
+
+                <div class="ui-row">
+                    <div class="life-container">
+                        <span class="life-label">LIFE</span>
+                        <div id="life-hearts">❤️❤️❤️❤️❤️</div>
+                    </div>
+
+                    <div class="item-box">
+                        <button id="btn-hint" class="item-btn" onclick="useHint()">
+                            🔍 <span id="hint-count" class="badge">3</span>
+                        </button>
+                    </div>
+                </div>
+            </div> 
+
             <div id="game-board" class="grid-container"></div>
+            
             <div id="start-overlay" class="hidden">START!</div>
         </div>
 
-      <div id="end-screen" class="screen hidden">
-    <div class="result-card">
-        <h2 class="result-title">MISSION<br>SUCCESS!</h2>
-        
-        <div class="winner-img-area">
-            <img src="image/end.png" alt="성공 고양이" class="winner-cat">
+        <div id="end-screen" class="screen hidden">
+            <div class="result-card">
+                <h2 class="result-title">MISSION<br>SUCCESS!</h2>
+                
+                <div class="winner-img-area">
+                    <img src="image/end.png" alt="성공 고양이" class="winner-cat">
+                </div>
+
+                <div class="score-box">
+                    <p class="score-label">총 플레이 시간</p>
+                    <p id="final-message" class="score-number">00초</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="menu-btn restart-btn" onclick="restartGame()">
+                        한 번 더 하기 ↺
+                    </button>
+                    <button class="menu-btn home-btn" onclick="goToHome()">
+                        처음으로
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="score-box">
-            <p class="score-label">총 플레이 시간</p>
-            <p id="final-message" class="score-number">00초</p>
+        <div id="fail-screen" class="screen hidden">
+            <div class="result-card fail-card">
+                <h2 class="result-title fail-title">GAME<br>OVER...</h2>
+                
+                <div class="winner-img-area fail-img-area">
+                    <img src="image/1.png" alt="실패 고양이" class="winner-cat">
+                </div>
+
+                <div class="score-box">
+                    <p class="score-label">아쉽게 실패했어요 😭</p>
+                </div>
+
+                <div class="button-group">
+                    <button class="menu-btn restart-btn" onclick="restartGame()">
+                        다시 도전! 🔥
+                    </button>
+                    <button class="menu-btn home-btn" onclick="goToHome()">
+                        홈으로
+                    </button>
+                </div>
+            </div>
         </div>
 
-        <div class="button-group">
-            <button class="menu-btn restart-btn" onclick="restartGame()">
-                한 번 더 하기 ↺
-            </button>
-            <button class="menu-btn home-btn" onclick="goToHome()">
-                처음으로
-            </button>
+        <div id="sound-box" style="display: none;">
+            <audio id="bgm" src="sound/bgm.mp3" loop></audio> 
+            <audio id="s-flip" src="sound/flip.wav"></audio>
+            <audio id="s-match" src="sound/match.mp3"></audio>
+            <audio id="s-success" src="sound/success.mp3"></audio>
+            <audio id="s-hint" src="sound/hint.wav"></audio>
         </div>
+
     </div>
-</div>
-
-    <div id="sound-box" style="display: none;">
-        <audio id="bgm" src="sound/bgm.mp3" loop></audio> <audio id="s-flip" src="sound/flip.wav"></audio>
-        <audio id="s-match" src="sound/match.mp3"></audio>
-        <audio id="s-success" src="sound/success.mp3"></audio>
-        <audio id="s-hint" src="sound/hint.wav"></audio>
-    </div>
-
-
-    </div> <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

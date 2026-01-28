@@ -5,36 +5,7 @@ body {
     min-height: 100vh; font-family: 'Pretendard', sans-serif;
 }
 
-/* 게임기 본체 틀 
-#game {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-    height: 90vh;
-    background: #ffffff;
-    border-radius: 24px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    
-}*/
-
 /* 1. 게임기 본체: 패딩 제거! (이미지를 꽉 채우기 위해) */
-#game0 {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-    height: 90vh;
-    background: #ffffff;
-    border-radius: 24px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; 
- 
-}
-
 #game {
     position: relative;
     width: 100%;
@@ -43,24 +14,16 @@ body {
     background: #ffffff;
     border-radius: 24px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    
     display: flex;
     flex-direction: column;
-    overflow: hidden;
-    padding: 0; /* <--- 중요! 패딩 0으로 설정 */
+    
+    /* [핵심] 여기서 여백을 주면 안 됩니다! 무조건 0! */
+    padding: 0 !important; 
+    
+    /* 둥근 모서리 밖으로 내용이 튀어나가지 않게 자름 */
+    overflow: hidden; 
 }
-
-/* 모든 화면 공통: 기본적으로 중앙 정렬
-.screen {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center; 
-    padding: 20px;
-    box-sizing: border-box;
-} */
-
 /* 2. 화면 공통: 여기서 패딩을 줍니다 */
 .screen {
     width: 100%;
@@ -121,33 +84,78 @@ body {
 
 /* 2. 게임 화면 특화: 스크롤이 필요하므로 상단 정렬로 변경 */
 #game-screen {
-    justify-content: flex-start; /* 상단부터 정렬 */
-    overflow-y: auto;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    
+    /* [핵심] 화면 자체에도 여백이 있으면 안 됩니다! */
+    padding: 0 !important; 
+    
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
 }
 #game-screen::-webkit-scrollbar { width: 4px; }
 #game-screen::-webkit-scrollbar-thumb { background: #ffb7b7; border-radius: 10px; }
 
-#timer-wrapper {
-    position: sticky; top: 0; background: white;
-    width: 100%; padding: 15px 0; text-align: center;
-    font-weight: bold; z-index: 10;
+/* --- [2] 상단 정보 헤더 (연보라색) --- */
+.game-header {
+    flex: 0 0 auto;
+    background-color: #F3E5F5;
+    border-bottom: 2px solid #E1BEE7;
+    
+    /* [핵심] 가로를 꽉 채우고, 마진을 없앱니다 */
+    width: 100% !important;
+    margin: 0 !important;
+    
+    /* 내부 내용물(하트, 타이머)은 살짝 안쪽으로 들어오게 패딩 유지 */
+    padding: 15px 20px 10px 20px; 
+    box-sizing: border-box; /* 패딩 포함해서 100% 계산 */
+    
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    z-index: 10;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-#timer-count { color: #ffb7b7; font-size: 1.5rem; }
+
+/* 기존 타이머 스타일 수정 (헤더 안으로 들어갔으니 고정 기능 제거) */
+#timer-wrapper {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #555;
+    margin-bottom: 10px;
+}
+#timer-count { color: #E91E63; font-size: 1.3rem; }
 
 .grid-container {
+    flex: 1; /* 남은 공간을 전부 차지해라! */
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 20px 20px 20px; /* 적당한 여백 */
+    
+    /* 카드 정렬 */
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 8px; width: 100%; padding-bottom: 30px;
-    margin: auto 0; /* 카드가 적을 땐 중앙으로 보냄 */
+    grid-template-columns: repeat(5, 1fr); /* 가로 5칸 */
+    gap: 8px; /* 카드 사이 간격 */
+    
+    /* [핵심] 내용물이 화면 중앙에 오도록 */
+    align-content: center; 
+    justify-content: center;
 }
 
 /* 카드 및 기타 (기존 동일) */
 /* 카드 전체 틀 */
-.card { 
-    position: relative; 
-    perspective: 1000px; 
-    aspect-ratio: 3 / 4; 
-    cursor: pointer;
+.card {
+    position: relative;
+    perspective: 1000px;
+    aspect-ratio: 3 / 4; /* 비율 유지 */
+    width: 100%; /* 그리드 칸에 맞춤 */
+    
+    /* [핵심] 화면이 작으면 카드도 알아서 작아짐 */
+    max-height: 15vh; /* 화면 높이의 15%를 넘지 않음 */
+    margin: 0 auto; /* 중앙 정렬 */
 }
 
 /* 카드 뒤집기 효과 */
@@ -220,25 +228,24 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     
-    font-size: 5.5rem; /* 글씨 크기 살짝 키움 */
-    font-weight: 900;
+    font-size: 5.5rem; /* 글씨 크기 */
+    font-weight: 900;  /* 글씨 두께 (제일 두껍게) */
+    color: #ffffff;    /* 글씨 자체는 흰색 */
     
-    /* 핵심 스타일: 흰색 글씨 + 도톰한 핑크 테두리 + 은은한 광채 */
-    color: #ffffff; /* 글씨는 깨끗한 흰색 */
-    
-    /* 도톰한 핑크색 테두리 (스티커 느낌) */
-    -webkit-text-stroke: 4px #ff9a9e; 
-    
-    /* 핑크색으로 부드럽게 퍼지는 빛 효과 */
+    /* [핵심 수정] 아웃라인을 그림자로 만듭니다! */
+    /* 상하좌우 대각선으로 그림자를 줘서 테두리처럼 보이게 함 */
     text-shadow: 
-        0 0 20px rgba(255, 154, 158, 0.6),
-        0 0 40px rgba(255, 154, 158, 0.3);
+        3px 3px 0px #ff9a9e,  /* 오른쪽 아래 */
+        -3px -3px 0px #ff9a9e, /* 왼쪽 위 */
+        3px -3px 0px #ff9a9e,  /* 오른쪽 위 */
+        -3px 3px 0px #ff9a9e,  /* 왼쪽 아래 */
+        0px 0px 20px rgba(255, 154, 158, 0.5); /* 은은한 빛 번짐 추가 */
         
     z-index: 100;
     pointer-events: none;
     white-space: nowrap;
     
-    /* 쫀득하게 튀어나오는 애니메이션 */
+    /* 쫀득하게 튀어나오는 애니메이션 (기존 유지) */
     animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -506,4 +513,125 @@ body {
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
+}
+
+
+.item-box {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 10px 0; /* 타이머와 카드 사이 간격 */
+    z-index: 20;
+}
+
+.item-btn {
+    background: white;
+    border: 2px solid #ffb7b7;
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.1s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.item-btn:active { transform: scale(0.95); }
+
+/* 아이템 다 쓰면 흐리게 처리 */
+.item-btn:disabled {
+    filter: grayscale(100%);
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.ui-row {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    justify-content: space-between; /* 양 끝 정렬 */
+    
+    /* [핵심] 수평선 맞추기 */
+    /* 하트들과 버튼의 '밑부분'을 기준으로 정렬하면 시각적으로 제일 안정적입니다 */
+    align-items: flex-end; 
+    
+    padding: 0 10px; /* 좌우 살짝 여유 */
+    margin-bottom: 5px; /* 헤더 바닥과의 간격 */
+}
+
+/* 2. 왼쪽: 생명(LIFE) */
+.life-container {
+    display: flex;
+    flex-direction: column; /* LIFE 글씨는 위, 하트는 아래 */
+    justify-content: flex-end; /* 아래쪽으로 붙이기 */
+    gap: 4px; /* 글씨와 하트 사이 간격 */
+}
+.life-label {
+    font-size: 0.75rem;
+    color: #9C27B0; /* 보라색 포인트 */
+    font-weight: 800;
+    margin-left: 2px; /* 하트랑 시작점 맞추기 */
+    line-height: 1; /* 글씨 높이 때문에 들뜨는 현상 방지 */
+}
+
+/* 하트 아이콘들을 감싸는 박스 */
+#life-hearts {
+    display: flex; /* 하트끼리 가로로 나란히 */
+    gap: 4px; /* 하트 사이 간격 */
+    height: 28px; /* 버튼 높이와 비슷하게 고정 */
+    align-items: center; /* 하트 수직 중앙 정렬 */
+}
+
+/* [NEW] 하트 이미지 스타일 */
+.heart-icon {
+    width: 28px; /* 하트 크기 (돋보기 아이콘과 비슷하게) */
+    height: 28px;
+    object-fit: contain; /* 비율 유지 */
+    
+    /* 픽셀 아트 느낌 살리기 (흐릿해짐 방지) */
+    image-rendering: pixelated; 
+}
+
+/* 3. 오른쪽: 아이템 버튼 영역 */
+.item-box { 
+    margin: 0; 
+    display: flex;
+    align-items: flex-end; /* 버튼도 바닥에 붙임 */
+}
+
+.item-btn {
+    background: white;
+    border: 2px solid #E1BEE7;
+    border-radius: 50px;
+    
+    /* 패딩 조절로 하트랑 높이 밸런스 맞춤 */
+    padding: 4px 12px; 
+    height: 36px; /* 버튼 전체 높이 고정 */
+    box-sizing: border-box;
+    
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    cursor: pointer;
+}
+
+.badge {
+    background: #E91E63;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 12px;
+    line-height: 1;
+}
+
+/* 버튼 비활성화 스타일 */
+.item-btn:disabled {
+    filter: grayscale(100%);
+    opacity: 0.5;
+    cursor: not-allowed;
 }
