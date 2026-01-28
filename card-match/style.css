@@ -142,13 +142,74 @@ body {
 }
 
 /* 카드 및 기타 (기존 동일) */
-.card { position: relative; perspective: 1000px; aspect-ratio: 3 / 4; }
-.card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+/* 카드 전체 틀 */
+.card { 
+    position: relative; 
+    perspective: 1000px; 
+    aspect-ratio: 3 / 4; 
+    cursor: pointer;
+}
+
+/* 카드 뒤집기 효과 */
+.card-inner { 
+    position: relative; 
+    width: 100%; 
+    height: 100%; 
+    transition: transform 0.6s; 
+    transform-style: preserve-3d; 
+}
+
+/* 카드 뒤집혔을 때 */
 .card.flipped .card-inner { transform: rotateY(180deg); }
-.card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 8px; display: flex; justify-content: center; align-items: center; }
-.card-front { background-color: #ffe0e0; }
-.card-back { background-color: #fff; transform: rotateY(180deg); border: 2px solid #ffb7b7; }
-.card-back img { width: 85%; height: 85%; object-fit: contain; }
+
+/* 앞면/뒷면 공통 설정 */
+.card-face { 
+    position: absolute; 
+    width: 100%; 
+    height: 100%; 
+    backface-visibility: hidden; 
+    border-radius: 8px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    box-sizing: border-box; /* 테두리 포함 크기 계산 */
+}
+
+/* 1. 카드 앞면 (여기가 덮여있는 '뚜껑'입니다! 패턴을 여기에 넣어야 해요) */
+.card-front { 
+    border: 2px solid #ffb7b7; /* 테두리 */
+    
+    /* 1. 베이스 색상: 아주 연한 우유 핑크 */
+    background-color: #fff0f0;
+
+    /* 2. 패턴: 귀여운 땡땡이 */
+    background-image: radial-gradient(
+        circle, 
+        rgba(255, 183, 183, 0.5) 20%, /* 동그라미 색상 */
+        transparent 20%
+    );
+    
+    /* 3. 패턴 크기 */
+    background-size: 16px 16px; 
+    background-repeat: repeat;
+}
+
+/* 2. 카드 뒷면 (여기는 고양이 사진이 나오는 면) */
+.card-back { 
+    background-color: #fff; 
+    transform: rotateY(180deg); 
+    border: 2px solid #ffb7b7; 
+    padding: 0; /* 사진 꽉 채우기 위해 여백 제거 */
+    overflow: hidden; /* 둥근 모서리 유지 */
+}
+/* 카드 뒷면의 고양이 이미지 */
+.card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 카드 꽉 채우기 */
+    display: block;
+}
+
 .card.matched { visibility: hidden; opacity: 0; transition: 0.6s; }
 
 /* START! 중앙 메시지 (가독성 강화 버전) */
@@ -303,4 +364,146 @@ body {
 @keyframes float {
     0%, 100% { transform: translate(-50%, -50%) translateY(0); }
     50% { transform: translate(-50%, -50%) translateY(-5px); }
+}
+
+/* --- 종료 화면 (End Screen) 디자인 --- */
+
+/* 1. 종료 화면 배경: 뒤가 살짝 비치는 핑크색 커튼 */
+#end-screen {
+    background-color: rgba(255, 255, 255, 0.9); /* 기존 흰색 대신 반투명 */
+    backdrop-filter: blur(5px); /* 뒤에 있는 게임 화면 흐리게 */
+    z-index: 200; /* 제일 위에 뜸 */
+}
+
+/* 2. 결과 카드: 중앙에 둥둥 떠 있는 팝업 */
+.result-card {
+    background: white;
+    width: 85%;
+    max-width: 320px;
+    padding: 30px 20px;
+    border-radius: 30px;
+    
+    /* 그림자로 입체감 빡! */
+    box-shadow: 
+        0 20px 50px rgba(255, 183, 183, 0.4),
+        0 0 0 5px rgba(255, 255, 255, 1); /* 흰색 테두리 */
+        
+    text-align: center;
+    border: 2px solid #ffeff0; /* 아주 연한 핑크 테두리 */
+    
+    /* 나타날 때 애니메이션 */
+    animation: popUpCard 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 3. 타이틀: MISSION SUCCESS */
+.result-title {
+    font-size: 2.2rem;
+    line-height: 1.1;
+    margin: 0 0 20px 0;
+    color: #ff9a9e;
+    font-weight: 900;
+    
+    /* 아까 START와 같은 스타일 적용 */
+    -webkit-text-stroke: 1px #ff7a7a;
+    text-shadow: 2px 2px 0px #fff4f4;
+}
+
+/* 1. 고양이를 감싸는 동그란 상자 (여기에 애니메이션을 줍니다!) */
+.winner-img-area {
+    /* 기존 크기, 모양 설정 유지 */
+    width: 100px !important;
+    height: 100px !important;
+    border-radius: 50% !important;
+    margin: 0 auto 20px !important;
+    padding: 0 !important;
+    background: #fff0f0; 
+    box-shadow: inset 0 0 10px rgba(255, 183, 183, 0.5);
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    
+    /* [핵심 변경] 애니메이션을 이 상자에 적용합니다! */
+    animation: bounceSimple 2s infinite ease-in-out;
+}
+
+/* 2. 고양이 이미지 자체 (여기선 애니메이션을 뺍니다) */
+.winner-cat {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    
+    /* animation: ... <-- 여기 있던 걸 지웠습니다! */
+}
+
+/* (기존 애니메이션 키프레임은 그대로 사용합니다) */
+@keyframes bounceSimple {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* 5. 점수(시간) 표시 영역 */
+.score-box {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 15px;
+    margin-bottom: 25px;
+}
+.score-label {
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0 0 5px 0;
+}
+.score-number {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #555;
+    margin: 0;
+}
+
+/* 6. 버튼 스타일 (그라데이션 & 아웃라인) */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* 다시 하기 버튼 (진한 핑크) */
+.restart-btn {
+    background: linear-gradient(135deg, #ff9a9e 0%, #ffc3a0 100%);
+    color: white;
+    padding: 15px;
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 5px 15px rgba(255, 154, 158, 0.4);
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+/* 홈으로 버튼 (흰색 + 핑크 테두리) */
+.home-btn {
+    background: white;
+    color: #ff9a9e;
+    border: 3px solid #ff9a9e;
+    padding: 12px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.restart-btn:active, .home-btn:active { transform: scale(0.95); }
+
+/* 애니메이션 정의 */
+@keyframes popUpCard {
+    from { transform: scale(0.8) translateY(20px); opacity: 0; }
+    to { transform: scale(1) translateY(0); opacity: 1; }
+}
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
 }

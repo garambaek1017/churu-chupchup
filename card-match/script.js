@@ -140,3 +140,43 @@ function startGameRandom() {
     // 선택된 난이도로 게임 로딩
     loadingGame(randomDifficulty);
 }
+
+
+let isHinting = false;
+
+// 화면 어디서든 오른쪽 마우스를 누르면 실행
+document.addEventListener('contextmenu', function(e) {
+    // 1. 기본 오른쪽 클릭 메뉴(저장, 인쇄 등)가 안 뜨게 막음
+    e.preventDefault();
+
+    // 2. 게임 중이 아니거나, 이미 힌트 보는 중이면 무시
+    const gameScreen = document.getElementById('game-screen');
+    if (gameScreen.classList.contains('hidden') || isHinting) return;
+
+    // 3. 힌트 시작!
+    isHinting = true;
+    
+    // 아직 짝을 못 맞춘 카드들만 찾음
+    const allCards = document.querySelectorAll('.card:not(.matched)');
+    
+    // 찾은 카드들을 전부 강제로 뒤집음 (보여줌)
+    allCards.forEach(card => {
+        card.classList.add('flipped');
+    });
+
+    // 4. 1.5초 뒤에 다시 덮기
+    setTimeout(() => {
+        allCards.forEach(card => {
+            // 주의: 사용자가 직접 뒤집어둔 카드도 이때 같이 덮입니다 (초기화)
+            // 힌트를 봤으니 공평하게 다시 시작하는 느낌!
+            card.classList.remove('flipped');
+        });
+        
+        // 현재 뒤집힌 카드 목록(flippedCards) 배열도 비워줘야 에러가 안 남
+        flippedCards = []; 
+        
+        // 힌트 종료 (이제 다시 클릭 가능)
+        isHinting = false;
+        
+    }, 1500); // 1500 = 1.5초 (시간 조절 가능)
+});

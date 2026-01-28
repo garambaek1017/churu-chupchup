@@ -24,16 +24,29 @@
             <div id="start-overlay" class="hidden">START!</div>
         </div>
 
-        <div id="end-screen" class="screen hidden">
-            <div class="end-content">
-                <h2>🎉 미션 성공!</h2>
-                <p id="final-message">수고하셨습니다.<br>playtime : 0초</p>
-                <div class="button-group">
-                    <button class="menu-btn secondary" onclick="restartGame()">다시 하기</button>
-                    <button class="menu-btn outline" onclick="goToHome()">시작으로</button>
-                </div>
-            </div>
+      <div id="end-screen" class="screen hidden">
+    <div class="result-card">
+        <h2 class="result-title">MISSION<br>SUCCESS!</h2>
+        
+        <div class="winner-img-area">
+            <img src="image/end.png" alt="성공 고양이" class="winner-cat">
         </div>
+
+        <div class="score-box">
+            <p class="score-label">총 플레이 시간</p>
+            <p id="final-message" class="score-number">00초</p>
+        </div>
+
+        <div class="button-group">
+            <button class="menu-btn restart-btn" onclick="restartGame()">
+                한 번 더 하기 ↺
+            </button>
+            <button class="menu-btn home-btn" onclick="goToHome()">
+                처음으로
+            </button>
+        </div>
+    </div>
+</div>
     </div> <script src="script.js"></script>
 </body>
 </html>
