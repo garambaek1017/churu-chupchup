@@ -5,7 +5,7 @@ body {
     min-height: 100vh; font-family: 'Pretendard', sans-serif;
 }
 
-/* 게임기 본체 틀 */
+/* 게임기 본체 틀 
 #game {
     position: relative;
     width: 100%;
@@ -16,18 +16,60 @@ body {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
-    overflow: hidden; /* 내부 요소가 넘치면 자름 */
+    overflow: hidden;
+    
+}*/
+
+/* 1. 게임기 본체: 패딩 제거! (이미지를 꽉 채우기 위해) */
+#game0 {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: 90vh;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; 
+ 
 }
 
-/* 모든 화면 공통: 기본적으로 중앙 정렬 */
+#game {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    height: 90vh;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 0; /* <--- 중요! 패딩 0으로 설정 */
+}
+
+/* 모든 화면 공통: 기본적으로 중앙 정렬
 .screen {
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center; /* 시작/종료 화면을 위해 중앙 정렬 기본값 */
+    justify-content: center; 
     padding: 20px;
+    box-sizing: border-box;
+} */
+
+/* 2. 화면 공통: 여기서 패딩을 줍니다 */
+.screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px; /* <-- 패딩을 여기로 이동 */
     box-sizing: border-box;
 }
 
@@ -42,7 +84,18 @@ body {
     margin-bottom: 20px;
     box-shadow: 0 10px 20px rgba(255, 183, 183, 0.3);
 }
-.title-img { width: 100%; height: 100%; object-fit: cover; }
+.title-img {
+    width: 100%;
+    height: 100%;
+    
+    /* 핵심 변경! cover -> contain */
+    /* cover: 박스를 꽉 채움 (잘릴 수 있음) */
+    /* contain: 비율 유지하며 다 보여줌 (여백 생길 수 있음) */
+    object-fit: contain; 
+    
+    /* 이미지가 작아서 여백이 생길 경우 중앙에 오도록 설정 */
+    object-position: center;
+}
 
 .difficulty-group {
     display: flex;
@@ -99,32 +152,155 @@ body {
 .card.matched { visibility: hidden; opacity: 0; transition: 0.6s; }
 
 /* START! 중앙 메시지 (가독성 강화 버전) */
+/* START! 중앙 메시지 (몽글몽글 핑크 버전) */
 #start-overlay {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 5rem; /* 글씨도 좀 더 키움 */
+    
+    font-size: 5.5rem; /* 글씨 크기 살짝 키움 */
     font-weight: 900;
     
-    /* 핵심: 색상을 진한 붉은색으로 변경 */
-    color: #e63946; 
+    /* 핵심 스타일: 흰색 글씨 + 도톰한 핑크 테두리 + 은은한 광채 */
+    color: #ffffff; /* 글씨는 깨끗한 흰색 */
     
-    /* 흰색 테두리와 진한 그림자로 입체감 빡! */
+    /* 도톰한 핑크색 테두리 (스티커 느낌) */
+    -webkit-text-stroke: 4px #ff9a9e; 
+    
+    /* 핑크색으로 부드럽게 퍼지는 빛 효과 */
     text-shadow: 
-        3px 3px 0px #ffffff, 
-        6px 6px 15px rgba(0,0,0,0.3);
+        0 0 20px rgba(255, 154, 158, 0.6),
+        0 0 40px rgba(255, 154, 158, 0.3);
         
     z-index: 100;
     pointer-events: none;
-    white-space: nowrap; /* 줄바꿈 방지 */
+    white-space: nowrap;
     
-    /* 펑! 하고 나타나는 애니메이션 추가 (선택사항) */
-    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    /* 쫀득하게 튀어나오는 애니메이션 */
+    animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-/* 팝업 애니메이션 */
 @keyframes popIn {
     0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    60% { transform: translate(-50%, -50%) scale(1.1); opacity: 1; } /* 살짝 커졌다가 */
+    100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } /* 제자리로 */
+}
+
+
+.start-bg0 {
+    /* 기존 100% 꽉 채우기 대신 여백을 줍니다 */
+    width: calc(100% - 40px) !important; /* 좌우 20px씩 여백 */
+    height: calc(100% - 40px) !important; /* 위아래 20px씩 여백 */
+    margin: 20px; /* 바깥 여백 */
+    
+    /* 이미지 모서리를 둥글게 깎아서 부드럽게 */
+    border-radius: 24px;
+    
+    /* 배경 이미지 설정 */
+    background-image: url('image/title.jpeg');
+    background-size: cover; /* 여전히 꽉 채우지만, 액자 안에서만 채움 */
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* 액자가 붕 떠 보이게 그림자 추가 (선택사항) */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.start-bg {
+    width: 100%;
+    height: 100%;
+    
+    /* 보내주신 이미지를 배경으로 설정 */
+    background-image: url('image/title.jpeg'); /* 파일명 정확히 확인! */
+    
+    /* 핵심: 가로 세로를 100%로 강제해서 박스에 딱 맞게 늘림 */
+    background-size: 100% 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* 내부 정렬 설정 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end; /* 버튼을 아래쪽으로 밀어줌 */
+}
+
+/* 2. 타이틀 글씨: 배경이 밝아졌으니 글씨를 진하게 + 흰색 테두리 */
+.main-title {
+    font-size: 2.8rem;
+    margin-bottom: 40px;
+    
+    /* 글씨 색상을 다시 진한 색(또는 핫핑크)으로 변경 */
+    color: #e63946; /* 빨간맛 핑크 (아까 START 색상과 통일) */
+    
+    /* 배경이 화려해도 글씨가 잘 보이게 '흰색 테두리'를 빡! 줍니다 */
+    text-shadow: 
+        3px 3px 0px #ffffff, 
+        0px 0px 8px rgba(255, 255, 255, 0.8);
+        
+    font-weight: 900;
+}
+
+/* --- 화면별 개별 설정 --- */
+
+/* 1. 시작 화면 (배경 이미지 & 버튼 기준점) */
+#start-screen {
+    position: relative; /* 자식인 버튼(absolute)의 기준점이 됨 */
+    /* 나머지 배경 관련 설정은 .start-bg 클래스에 있습니다 */
+}
+
+/* 2. 게임 화면 & 종료 화면 (흰색 배경 & 여백 복구) */
+/* 아까 #game에서 padding: 0을 했기 때문에, 여기서 다시 padding을 줘야 함 */
+#game-screen, #end-screen {
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff; /* 흰색 배경 */
+    padding: 20px; /* 내부 여백 확보 */
+    box-sizing: border-box; /* 패딩 줬을 때 박스 커짐 방지 */
+}
+
+/* GAME START 버튼: 배경과 어울리는 몽환적인 핑크 스타일 */
+.start-btn {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    padding: 15px 60px; /* 좌우 여백을 좀 더 넓게 */
+    font-size: 1.6rem;
+    font-weight: 900;
+    
+    /* 핵심: 흰색 배경 대신 부드러운 핑크 그라데이션 적용 */
+    background: linear-gradient(180deg, #ff9a9e 0%, #ffc3a0 100%);
+    
+    /* 글씨는 깔끔하게 흰색 + 그림자 */
+    color: #ffffff;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    
+    /* 테두리를 흰색으로 줘서 스티커처럼 보이게 */
+    border: 3px solid #ffffff;
+    border-radius: 50px;
+    
+    /* 그림자도 핑크색으로 은은하게 퍼지게 */
+    box-shadow: 0 10px 20px rgba(255, 154, 158, 0.5);
+    
+    cursor: pointer;
+    white-space: nowrap;
+    
+    /* 둥실둥실 떠있는 애니메이션 */
+    animation: float 2s infinite ease-in-out;
+}
+
+/* 호버 효과: 밝아지면서 살짝 커짐 */
+.start-btn:hover {
+    background: linear-gradient(180deg, #ffc3a0 0%, #ff9a9e 100%); /* 색상 반전 */
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 15px 25px rgba(255, 154, 158, 0.7);
+}
+
+/* 둥실둥실 애니메이션 (기존 pulse 대신 더 부드러운 느낌) */
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+    50% { transform: translate(-50%, -50%) translateY(-5px); }
 }

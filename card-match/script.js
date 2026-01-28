@@ -66,7 +66,7 @@ card.innerHTML = `
             <img src="image/${imageNum}.png"> 
         </div>
     </div>`;
-    
+
         card.addEventListener('click', flipCard);
         board.appendChild(card);
     });
@@ -123,4 +123,20 @@ function goToHome() { showScreen('start-screen'); }
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
     document.getElementById(id).classList.remove('hidden');
+}
+
+function startGameRandom() {
+    // 난이도 목록: 15(하), 20(중), 25(상)
+    //const difficulties = [15, 20, 25];
+
+    const difficulties = [5, 10, 15];
+    
+    // 3개 중 하나를 랜덤으로 뽑음
+    const randomIndex = Math.floor(Math.random() * difficulties.length);
+    const randomDifficulty = difficulties[randomIndex];
+    
+    console.log(`랜덤 선택된 난이도: ${randomDifficulty}쌍`); // 확인용 로그
+    
+    // 선택된 난이도로 게임 로딩
+    loadingGame(randomDifficulty);
 }

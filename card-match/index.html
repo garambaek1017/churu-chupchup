@@ -8,16 +8,11 @@
 </head>
 <body>
     <div id="game">
-        <div id="start-screen" class="screen">
-            <div class="title-image-area">
-                <img src="image/title.jpeg" alt="게임 타이틀" class="title-img">
-            </div>
-            <h1 class="game-title">카드 짝 맞추기</h1>
-            <div class="difficulty-group">
-                <button class="menu-btn diff-btn easy" onclick="loadingGame(5)">하 (5쌍)</button>
-                <button class="menu-btn diff-btn normal" onclick="loadingGame(10)">중 (10쌍)</button>
-                <button class="menu-btn diff-btn hard" onclick="loadingGame(15)">상 (15쌍)</button>
-            </div>
+       <div id="start-screen" class="screen start-bg"> 
+    
+            <button class="menu-btn start-btn" onclick="startGameRandom()">
+                GAME START
+            </button>
         </div>
 
         <div id="game-screen" class="screen hidden">
