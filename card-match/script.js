@@ -57,15 +57,16 @@ function createBoard() {
         card.classList.add('card');
         card.dataset.value = imageNum; // 이미지 번호를 비교값으로 사용
         
-        // 뒷면에 image/ 폴더의 이미지를 넣습니다.
-        card.innerHTML = `
-            <div class="card-inner">
-                <div class="card-face card-front"></div>
-                <div class="card-face card-back">
-                    <img src="image/${imageNum}.png" style="width: 90%; height: 90%; object-fit: contain;">
-                </div>
-            </div>`;
-        
+       // 카드 생성 부분의 innerHTML만 한 번 더 확인!
+card.innerHTML = `
+    <div class="card-inner">
+        <div class="card-face card-front">
+             </div>
+        <div class="card-face card-back">
+            <img src="image/${imageNum}.png"> 
+        </div>
+    </div>`;
+    
         card.addEventListener('click', flipCard);
         board.appendChild(card);
     });
