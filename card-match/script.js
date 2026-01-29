@@ -17,6 +17,18 @@ let currentLives = 5;
 let hintCount = 3;
 let isHinting = false; // 힌트 보는 중인지 체크
 
+// 카드 번호(이미지)별 배경색 지정
+const cardColors = {
+    1: "#FFCFE1", // 연한 핑크
+    2: "#CDF0EA", // 연한 민트
+    3: "#F9F9C5", // 연한 노랑
+    4: "#D6E5FA", // 연한 하늘
+    5: "#E8D3FF", // 연한 보라
+    6: "#FFDCA9", // 연한 주황
+    7: "#D3F4D3", // 연한 연두
+    8: "#FFB7B2", // [추가됨] 연한 코랄 (살구빛 핑크)
+};
+
 // 1. 게임 로딩
 function loadingGame(pairCount) {
     currentDifficulty = pairCount;
@@ -49,17 +61,24 @@ function loadingGame(pairCount) {
     }, 500);
 }
 
-// 2. 카드 준비 (랜덤 추출)
 function prepareCards(pairCount) {
+    // 전체 이미지를 1번부터 순서대로 만듭니다.
     const allNumbers = Array.from({length: totalImages}, (_, i) => i + 1);
-    allNumbers.sort(() => Math.random() - 0.5);
+    
+    // [삭제됨] 랜덤으로 섞는 코드를 지웠습니다.
+    // allNumbers.sort(() => Math.random() - 0.5); 
+
+    // 앞에서부터 pairCount 개수만큼 자릅니다 (즉, 1번 ~ pairCount번)
     const selectedImages = allNumbers.slice(0, pairCount);
+    
     gameCards = [...selectedImages, ...selectedImages];
 }
 
 // 3. 보드 생성
 function createBoard() {
     board.innerHTML = '';
+    
+    // 카드 섞기
     gameCards.sort(() => Math.random() - 0.5);
     
     gameCards.forEach(imageNum => {
@@ -67,11 +86,15 @@ function createBoard() {
         card.classList.add('card');
         card.dataset.value = imageNum;
         
+        // [추가] 2. 현재 이미지 번호에 맞는 색상 가져오기 (없으면 흰색)
+        const bgColor = cardColors[imageNum] || '#FFFFFF';
+
+        // [수정] 3. style 속성을 이용해 배경색 적용
         card.innerHTML = `
             <div class="card-inner">
                 <div class="card-face card-front"></div>
-                <div class="card-face card-back">
-                    <img src="image/${imageNum}.png"> 
+                <div class="card-face card-back" style="background-color: ${bgColor};">
+                    <img src="image/${imageNum}.png" alt="card image"> 
                 </div>
             </div>`;
 
@@ -183,7 +206,7 @@ function showScreen(id) {
 }
 
 function startGameRandom() {
-    const difficulties = [5, 10, 15];
+    const difficulties = [8];
     const randomIndex = Math.floor(Math.random() * difficulties.length);
     loadingGame(difficulties[randomIndex]);
 }
@@ -196,17 +219,8 @@ function initLives() {
 
 function updateLifeUI() {
 
-    /*
     const lifeContainer = document.getElementById('life-hearts');
-    let hearts = '';
-    for (let i = 0; i < maxLives; i++) {
-        if (i < currentLives) hearts += '❤️';
-        else hearts += '🤍'; // 빈 하트
-    }
-    lifeContainer.innerText = hearts;
-    */
 
-    const lifeContainer = document.getElementById('life-hearts');
     let heartsHTML = '';
     
     for (let i = 0; i < maxLives; i++) {

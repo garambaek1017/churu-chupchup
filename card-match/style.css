@@ -137,7 +137,7 @@ body {
     
     /* 카드 정렬 */
     display: grid;
-    grid-template-columns: repeat(5, 1fr); /* 가로 5칸 */
+    grid-template-columns: repeat(4, 1fr); /* 가로 5칸 */
     gap: 8px; /* 카드 사이 간격 */
     
     /* [핵심] 내용물이 화면 중앙에 오도록 */
@@ -202,20 +202,32 @@ body {
     background-repeat: repeat;
 }
 
-/* 2. 카드 뒷면 (여기는 고양이 사진이 나오는 면) */
+/* 2. 카드 뒷면 */
 .card-back { 
     background-color: #fff; 
     transform: rotateY(180deg); 
-    border: 2px solid #ffb7b7; 
-    padding: 0; /* 사진 꽉 채우기 위해 여백 제거 */
-    overflow: hidden; /* 둥근 모서리 유지 */
+    border: 2px solid #858585; 
+    
+    /* [수정 1] 여백을 0 -> 5%로 변경 (이미지를 안으로 밀어넣음) */
+    padding: 5%; 
+    
+    /* [추가] 패딩을 줘도 카드 전체 크기가 커지지 않게 고정 */
+    box-sizing: border-box; 
+    
+    overflow: hidden; 
 }
+
 /* 카드 뒷면의 고양이 이미지 */
 .card-back img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* 카드 꽉 채우기 */
-    display: block;
+    
+    /* [수정 2] cover -> contain 으로 변경 */
+    /* cover: 꽉 채우려고 이미지를 확대해서 자름 */
+    /* contain: 비율을 유지하면서 이미지 전체가 다 보이게 함 */
+    object-fit: contain; 
+    
+    /*display: block;*/
 }
 
 .card.matched { visibility: hidden; opacity: 0; transition: 0.6s; }
